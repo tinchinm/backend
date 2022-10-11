@@ -1,0 +1,28 @@
+[
+    {
+      "title": "Escuadra",
+      "price": 123,
+      "id": 1
+    },
+    {
+      "title": "Calculadora",
+      "price": 234,
+      "id": 2
+    },
+    {
+      "title": "Globo Terráqueo",
+      "price": 345,
+      "id": 3
+    },
+    {
+      "title": "Goma",
+      "price": 234,
+      "id": 4
+    },
+    {
+      "title": "Lapicera",
+      "price": 456,
+      "id": 5
+    }
+   ]
+   

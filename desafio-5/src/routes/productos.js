@@ -61,10 +61,7 @@ rutaProductos.post('/', async (req, res) => {
 
 	await fs.writeFile(ruta, JSON.stringify(productos, null, '\t'));
 	
-	res.json({
-		msg: 'Se ha cargado correctamente el siguiente producto:',
-		data: nuevoProducto
-	})
+	res.redirect('back')
 
 });
 

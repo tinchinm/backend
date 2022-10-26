@@ -19,11 +19,9 @@ app.use(express.static('public'));
 
 app.use('/api', mainRouter );
 
-app.get('/', (req, res) => {
-	res.render('index');
-});
+//ACA ESTAN LOS RENDERIZADOS QUE REALIZA EJS
 
-app.get('/index', (req, res) => {
+app.get('/', (req, res) => {
 	res.render('index');
 });
 

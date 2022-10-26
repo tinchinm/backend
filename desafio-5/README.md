@@ -31,10 +31,10 @@ Elegí como motor de plantillas EJS, ya que me parece mas "legible" al estar mas
 ---
 ## Dependencias
 
-Uso de Express como Framework principal.
-Uso de EJS como motor de plantillas.
-Uso de UUID como plugin de creacion de IDs.
-Uso de Boostrap y Material UI para la estética del proyecto.
+- Uso de Express como Framework principal.
+- Uso de EJS como motor de plantillas.
+- Uso de UUID como plugin de creacion de IDs.
+- Uso de Boostrap y Material UI para la estética del proyecto.
 
 ---
 ### Autor

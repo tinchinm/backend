@@ -1,0 +1,22 @@
+[
+	{
+		"id": "6bb8dc78-7fef-4a11-a8f6-683efe23f71a",
+		"timestamp": "07/11/2022, 18:00",
+		"title": "Regla",
+		"description": "Regla de 20cm",
+		"code": "1234",
+		"thumbnail": "archivo.jpg",
+		"price": "100",
+		"stock": "5"
+	},
+	{
+		"id": "89ce8c7b-8a7c-4e83-819b-e3265b034a24",
+		"timestamp": "07/11/2022, 18:03",
+		"title": "Lápiz",
+		"description": "Lapiz negro HB",
+		"code": "3124",
+		"thumbnail": "archivo2.jpg",
+		"price": "50",
+		"stock": "10"
+	}
+]

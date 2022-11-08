@@ -57,7 +57,7 @@ rutaCarrito.delete('/:id', async (req: Request, res: Response) => {
     }
 })
 
-//      GET BY ID
+// MOSTRAR LOS PRODUCTOS QUE HAY EN UN CARRITO POR ID
 rutaCarrito.get('/:id/productos', async (req: Request, res: Response) => {
     const getData = await fs.readFile(ruta, 'utf-8')
     const data = JSON.parse(getData)

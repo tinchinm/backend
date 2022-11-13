@@ -1,6 +1,7 @@
 // IMPORTACIONES DE LOS MODULOS
 import express, { Request, Response } from "express";
 import path from "path";
+import mainRouter from "../routes/router";
 
 const http = require ('http')
 
@@ -21,8 +22,10 @@ const viewsPath = path.resolve(__dirname, '../views');
 app.set('view engine', 'ejs');
 app.set('views', viewsPath);
 
+// ACA VAN LAS RUTAS DE LAS APIS
+app.get('/api', mainRouter);
 
-//ACA ESTAN LOS RENDERIZADOS QUE REALIZA EJS
+// ACA ESTAN LOS RENDERIZADOS QUE REALIZA EJS
 
 app.get('/', async (req: Request, res: Response) => {
 	res.render('index');

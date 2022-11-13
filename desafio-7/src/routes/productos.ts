@@ -1,14 +1,10 @@
 // IMPORTACIONES DE LOS MODULOS
-import { Router, Request, Response, NextFunction } from 'express';
-import path from 'path';
+import { Router, Request, Response } from 'express';
 import { esAdmin } from '../middlewares/middlewares';
 import { productController } from '../controllers/productos.controller';
 
 // LLAMADO DE FUNCIÓN ROUTER
 const rutaProductos = Router();
-
-// RUTA DONDE SE ENCUENTRAN LOS DATOS
-const ruta = path.resolve(__dirname, '../../productos.json');
 
 //      GET ALL
 rutaProductos.get('/', async (req: Request, res: Response) => {
@@ -18,7 +14,6 @@ rutaProductos.get('/', async (req: Request, res: Response) => {
 	} catch (error) {
 		console.error(error)
 	}
-
 });
 
 //      GET BY ID

@@ -89,7 +89,7 @@ let tablaMsg = document.getElementById('msg');
 //TABLA DE PRODUCTOS
 
 socket.on('productos', (data) => {
-   const productos = JSON.parse(data)
+   const productos = data
 
    if (productos.length === 0){
 
@@ -118,15 +118,19 @@ socket.on('productos', (data) => {
 // RESCATO LOS DATOS DEL FORMULARIO
 const formProd = document.getElementById('formCargaProd');
 const title = document.getElementById('title');
-const price =  document.getElementById('price');
+const description = document.getElementById('description');
+const code = document.getElementById('code');
 const thumbnail =  document.getElementById('thumbnail');
+const price =  document.getElementById('price');
+const stock = document.getElementById('stock');
+
 
 formProd.addEventListener('submit', (e) => {
     //PREVENGO EL COMPORTAMIENTO POR DEFECTO
     e.preventDefault();
 
     //VALIDACION DE DATOS
-    if(!title.value || !price.value || !thumbnail.value){
+    if(!title.value || !description.value || !code.value || !thumbnail.value || !price.value || !stock.value ){
 
         //DISPARA ERROR
         Swal.fire({
@@ -140,10 +144,12 @@ formProd.addEventListener('submit', (e) => {
     }else{
         //ARMADO DEL OBJETO PARA ENVIAR
         const dataProducto = {
-            id: uuid.v4(),
             title: title.value,
+            description: description.value,
+            code: code.value,
+            thumbnail: thumbnail.value,
             price: price.value,
-            thumbnail: thumbnail.value
+            stock: stock.value
         }
         //ENVIO DE DATA AL SERVER
         socket.emit('productoCompleto', dataProducto)

@@ -1,6 +1,7 @@
 // IMPORTACIONES DE LOS MODULOS
 import fs from "fs/promises"
 import path from "path";
+import { productController } from '../controllers/productos.controller';
 
 const io = require ('socket.io');
 
@@ -17,14 +18,10 @@ myWSServer.on('connection', async (socket:any) => {
 
     socket.on('productoCompleto', async (dataProd:any) => {
         
-        const getData = await fs.readFile(rutaProd, 'utf-8');
-	    const productos = JSON.parse(getData);
-	    productos.push(dataProd);
-
-	    await fs.writeFile(rutaProd, JSON.stringify(productos, null, '\t'));
+        await productController.newElement(dataProd);
     })
 
-    const getData = await fs.readFile(rutaProd, 'utf-8');
+    const getData = await productController.obtenerDatos();
     socket.emit('productos', getData)
 
     socket.on('mensajeCompleto', async (data:any) => {

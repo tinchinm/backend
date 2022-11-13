@@ -2,8 +2,7 @@
 import express, { Request, Response } from "express";
 import path from "path";
 import mainRouter from "../routes/router";
-
-const http = require ('http')
+import { Server } from 'http'
 
 // CARGA DE EXPRESS
 const app = express ();
@@ -33,6 +32,6 @@ app.use('/api', mainRouter);
 
 //ACA ESTA TODO LO RELACIONADO A SOCKET
 
-const myHTTPServer = http.Server(app)
+const myHTTPServer = new Server(app)
 
 export default myHTTPServer

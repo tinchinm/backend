@@ -22,14 +22,14 @@ const viewsPath = path.resolve(__dirname, '../views');
 app.set('view engine', 'ejs');
 app.set('views', viewsPath);
 
-// ACA VAN LAS RUTAS DE LAS APIS
-app.get('/api', mainRouter);
-
 // ACA ESTAN LOS RENDERIZADOS QUE REALIZA EJS
 
 app.get('/', async (req: Request, res: Response) => {
 	res.render('index');
 });
+
+// ACA VAN LAS RUTAS DE LAS APIS
+app.use('/api', mainRouter);
 
 //ACA ESTA TODO LO RELACIONADO A SOCKET
 

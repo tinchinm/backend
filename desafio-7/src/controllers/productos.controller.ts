@@ -51,7 +51,7 @@ class ApiProds {
         if(!data.title || !data.description || !data.code || !data.thumbnail || !data.price || !data.stock ) throw new Error ("Los campos estan incompletos")
         
         const updatedProd = {
-            id: data.productos[indice].id,
+            id: id,
             timestamp: moment().format("DD/MM/YYYY, HH:mm"),
             title: data.title,
             description: data.description,

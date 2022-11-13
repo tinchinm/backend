@@ -10,7 +10,7 @@ const rutaProductos = Router();
 rutaProductos.get('/', async (req: Request, res: Response) => {
 	try {
 		let data = await productController.obtenerDatos();
-    	res.json(data.recData)
+    	res.json(data)
 	} catch (error) {
 		console.error(error)
 	}
@@ -33,8 +33,8 @@ rutaProductos.post('/',  esAdmin , async (req: Request, res: Response) => {
 		const dataProd = req.body;	
 		const dataP = await productController.newElement(dataProd);
 		res.json({
-		msg: 'Se ha cargado correctamente el siguiente producto:',
-		data: dataP
+			msg: 'Se ha cargado correctamente el siguiente producto:',
+			data: dataP
 		})
 	} catch (error) {
 		console.error(error)
@@ -47,7 +47,10 @@ rutaProductos.put('/:id',  esAdmin , async (req: Request, res: Response) => {
 		const id = req.params.id;
 		const data = req.body;
 		const modProd = await productController.updateById(id, data);
-		res.json({msg: `Se modifico correctamente el producto con id ${id}`})
+		res.json({
+			msg: `Se modifico correctamente el producto con id ${id}`,
+			data: modProd
+		})
 	} catch (error) {
 		console.error(error)
 	}

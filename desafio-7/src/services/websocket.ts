@@ -1,5 +1,5 @@
 // IMPORTACIONES DE LOS MODULOS
-import { obtenerDatos, newElement } from '../controllers/productos.controller';
+import { obtenerDatos, newElementWS } from '../controllers/productos.controller';
 import { mensajesController } from '../controllers/mensajes.controller'
 import { Server, Socket } from 'socket.io'
 
@@ -15,7 +15,7 @@ myWSServer.on('connection', async (socket:Socket) => {
 
     //RECIBO UN PRODUCTO NUEVO Y LO GUARDO                          
     socket.on('productoCompleto', async (dataProd:any) => {   
-        /* await newElement(dataProd); */                       //Esta funcion me falta
+        await newElementWS(dataProd); 
     })
 
     //ENVÍO LOS PRODUCTOS AL FRONT PARA ARMAR LA TABLA

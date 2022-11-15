@@ -22,7 +22,7 @@ export const getById = async (req:Request, res:Response) => {
     }
 }
 
-export const newElement = async (req:Request, res:Response) => {
+export const newElement = async ( req:Request, res:Response ) => {
     try {
         const data = req.body;
         if(!data.title || !data.description || !data.code || !data.thumbnail || !data.price || !data.stock ){
@@ -85,4 +85,25 @@ export const deleteById = async (req:Request, res:Response) => {
     } catch (error) {
         res.status(400).json(error);
     }
+}
+
+export const newElementWS = async ( data:any ) => {
+        
+        if(!data.title || !data.description || !data.code || !data.thumbnail || !data.price || !data.stock ){
+            
+            throw new Error("Datos Incompletos")
+
+        } else {
+            const newProduct = {
+                id: uuidv4(),
+                timestamp: moment().format("DD/MM/YYYY, HH:mm"),
+                title: data.title,
+                description: data.description,
+                code: data.code,
+                thumbnail: data.thumbnail,
+                price: data.price,
+                stock: data.stock
+            }
+            await createProd(newProduct);
+        }
 }

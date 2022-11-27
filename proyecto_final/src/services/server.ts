@@ -1,6 +1,7 @@
 // IMPORTACIONES DE LOS MODULOS
 import express, { Request, Response, NextFunction} from "express";
 import mainRouter from "../routes/router";
+import 'dotenv/config'
 
 // CARGA DE EXPRESS
 const app = express();

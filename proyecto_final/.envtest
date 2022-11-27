@@ -1,0 +1,1 @@
+MONGO_ATLAS = mongodb+srv://admin:admin5678@cluster0.r1t5bur.mongodb.net/ecommerce?retryWrites=true&w=majority

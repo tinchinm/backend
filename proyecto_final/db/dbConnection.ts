@@ -2,7 +2,7 @@
 import mongoose from 'mongoose'
 
 //RUTA DE ACCESO A LAS BASES DE DATOS
-const connectionPath = 'mongodb://localhost:27017/ecommerce'
+const connectionPath = process.env.MONGO_ATLAS ||'mongodb://localhost:27017/ecommerce'
 
 //INICIALIZACIÓN DE LA BASE DE DATOS
 export const initMongoDB = async () => {

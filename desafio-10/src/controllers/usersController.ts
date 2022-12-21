@@ -2,6 +2,21 @@
 import passport from "passport";
 import { Request, Response, NextFunction } from "express";
 
+//RENDER DEL HOME
+export const home = async (req: Request, res: Response) => {
+	res.render('index');
+}
+
+//RENDER DEL REGISTRO
+export const registration = async (req: Request, res: Response) => {
+	res.render('register');
+}
+
+//RENDER DEL HOME LOGUEADO
+export const homeIn = async (req: Request, res: Response) => {
+	res.render('home');
+}
+
 // REGISTRAR USUARIO
 export const register = (req:Request, res:Response, next:NextFunction) => {
     
@@ -19,9 +34,5 @@ export const register = (req:Request, res:Response, next:NextFunction) => {
 // LOGUEAR USUARIO
 export const login = (req:Request, res:Response) => {
   
-  res.json({msg:'Usuario logueado exitosamente', user : req.user})
-}
-
-export const getHome = (req:Request, res:Response) => {
-  res.json(req.session)
+  res.redirect('/home')
 }

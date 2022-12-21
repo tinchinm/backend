@@ -6,7 +6,6 @@ import { Request, Response, NextFunction } from "express";
 export const register = (req:Request, res:Response, next:NextFunction) => {
     
   passport.authenticate('register', (err, user, info) =>{
-    console.log('info');
     
     if (err) { return next(err)}
 
@@ -14,7 +13,7 @@ export const register = (req:Request, res:Response, next:NextFunction) => {
 
     res.json({msg:'Usuario registrado con éxito'})
 
-  })
+  })(req, res, next)
 }
 
 // LOGUEAR USUARIO

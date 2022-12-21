@@ -9,8 +9,6 @@ const register = async ( username:String, password:String, done:Function ) =>{
         
         const newUser = new UsersModel({username, password});
 
-        newUser.password = await newUser.cryptPass(password)
-
         await newUser.save();
         
         return done(null, newUser);
@@ -26,7 +24,7 @@ export const registerFunc = new LocalStrategy( register );
 // FUNCION PARA LOGUEARSE
 const login = async ( username:String, password:String, done:Function ) =>{
     
-    const user = await UsersModel.findOne({username, password});
+    const user = await UsersModel.findOne({username});
 
     if (!user) {
         return done(null, false, {message: 'Usuario inexistente'})

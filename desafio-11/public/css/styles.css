@@ -1,0 +1,28 @@
+* {
+    padding: 0px;
+    margin: 0px;
+    list-style-type: none;
+    text-decoration: none;
+  }
+
+.container {
+  background-color: antiquewhite;
+  padding: 20px;
+  margin: 20px;
+  width: 60% !important; 
+}
+
+.container2 {
+  background-color: antiquewhite;
+  padding: 20px;
+  margin: 20px;
+  width: 60% !important;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.container2 button {
+  margin-left: 50px !important;
+}

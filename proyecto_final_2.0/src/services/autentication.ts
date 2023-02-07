@@ -3,24 +3,6 @@ import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import { UsersModel } from "../models/users.model";
 
-// REGISTRAR USUARIO NUEVO
-const register = async  ( name:String, address:String, phone:Number, mail:String, username:String, password:String, avatar:String, done:Function ) =>{
-    try {
-        
-        const newUser = new UsersModel({name, address, phone, mail, username, password, avatar});
-
-        await newUser.save();
-        
-        return done(null, newUser);
-  
-    } catch (error) {
-        
-        return done(null, false, { message: 'Ha ocurrido un error' });
-    }
-}
-
-export const registerFunc = new LocalStrategy( register );
-
 // FUNCION PARA LOGUEARSE
 const login = async ( username:String, password:String, done:Function ) =>{
     

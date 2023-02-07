@@ -6,7 +6,7 @@ import 'dotenv/config'
 import { StoreOptions } from "../config/sessions.config";
 import path from "path";
 import passport from "passport";
-import { loginFunc, registerFunc } from "./autentication";
+import { loginFunc } from "./autentication";
 
 // CARGA DE EXPRESS
 const app = express();
@@ -30,7 +30,6 @@ app.use(session(StoreOptions));
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.use('register', registerFunc);
 passport.use('login', loginFunc);
 
 // ROUTER 

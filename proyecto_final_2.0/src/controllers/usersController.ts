@@ -1,6 +1,8 @@
 // IMPORTACION DE MODULOS
 import passport from "passport";
+import { UsersModel } from "../models/users.model";
 import { Request, Response, NextFunction } from "express";
+import { sendMailRegister } from "./mail.controller";
 
 //RENDER DEL HOME
 export const home = async (req: Request, res: Response) => {
@@ -18,17 +20,24 @@ export const homeIn = async (req: Request, res: Response) => {
 }
 
 // REGISTRAR USUARIO
-export const register = (req:Request, res:Response, next:NextFunction) => {
+export const register = async (req:Request, res:Response) => {
+
+  const {name, address, phone, mail, username, password, avatar} = req.body
+
+  try {
+        
+    const newUser = new UsersModel({name, address, phone, mail, username, password, avatar});
+
+    await newUser.save();
+
+    await sendMailRegister(mail,name);
     
-  passport.authenticate('register', (err, user, info) =>{
-    
-    if (err) { return next(err)}
+    return res.json(newUser)
 
-    if (!user) { res.json(info) }
-
-    res.json({msg:'Usuario registrado con éxito'})
-
-  })(req, res, next)
+  } catch (error) {
+      
+      return res.json({ message: 'Ha ocurrido un error' });
+  }
 }
 
 // LOGUEAR USUARIO

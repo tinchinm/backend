@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 export const usersCollectionName = 'products'
 
 export const usersSchema = new mongoose.Schema({
-    timestamp: {type: String, required: true},
     title: {type: String, required: true},
     description: {type: String, required: true},
     price: {type: String, required: true},

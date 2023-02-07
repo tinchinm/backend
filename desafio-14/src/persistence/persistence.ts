@@ -9,12 +9,10 @@ let option = process.env.PERSISTENCE;
 switch(option) {
     case 'file':
         persistence = File;
-        console.log(option);
         break;
     case 'mongo':
         initMongoDB();
         persistence = MongoDB;
-        console.log(option);
         break;
 }
 

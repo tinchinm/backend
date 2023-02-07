@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import { ProductsModel } from "./models/products.model";
 import dotenv from 'dotenv';
-import moment from 'moment';
 
 dotenv.config();
 
@@ -54,8 +53,6 @@ export const updateById = async (id:any, data:any) => {
 
         const product = await ProductsModel.findById(id);
 
-        const timestamp = moment().format("DD/MM/YYYY, HH:mm");
-
         const { title, description, code, thumbnail, price, stock } = data
         
         if (!product) throw new Error ('Producto Inexistente');
@@ -64,7 +61,7 @@ export const updateById = async (id:any, data:any) => {
 
         const productUpdated = await ProductsModel.findByIdAndUpdate(
             id,
-            { timestamp, title, description, code, thumbnail, price, stock },
+            { title, description, code, thumbnail, price, stock },
             { new: true }
           );
         

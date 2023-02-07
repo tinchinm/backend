@@ -1,6 +1,5 @@
 import fs from 'fs';
 import path from 'path';
-import moment from 'moment';
 
 const pathProd = path.resolve(__dirname, './DB.json');
 
@@ -46,7 +45,6 @@ export const updateById = async (id:any, data:any) => {
     
     const updatedProd = {
         id: id,
-        timestamp: moment().format("DD/MM/YYYY, HH:mm"),
         title: data.title,
         description: data.description,
         code: data.code,

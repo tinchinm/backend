@@ -1,12 +1,15 @@
 // IMPORTACIONES DE LOS MODULOS
 import { Router } from 'express';
-import { getAllController, saveController, updateByIdController, deleteByIdController } from '../controllers/productos.controller';
+import { getAllController, getByIdController, saveController, updateByIdController, deleteByIdController } from '../controllers/productos.controller';
 
 // LLAMADO DE FUNCIÓN ROUTER
 const rutaProductos = Router();
 
 //      GET ALL
 rutaProductos.get('/', getAllController );
+
+//      GET BY ID
+rutaProductos.get('/:id', getByIdController );
 
 //      POST
 rutaProductos.post('/', saveController );
@@ -15,7 +18,7 @@ rutaProductos.post('/', saveController );
 rutaProductos.put('/:id', updateByIdController );
 
 //      DELETE
-rutaProductos.delete('/:id', deleteByIdController )
+rutaProductos.delete('/:id', deleteByIdController );
 
 
 export default rutaProductos;

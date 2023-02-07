@@ -7,7 +7,9 @@ export const chartCollectionName = 'carrito'
 // DEFINICION DEL ESQUEMA PARA LA DB
 const chartSchema = new mongoose.Schema({
     timestamp:{type: String, required: true},
-    products:{ type: Array, required: true}
+    products:{ type: Array, required: true},
+    userID:{type:String, required: false},
+    status:{type:String, default:'pending'}
 })
 
 //EXPORTACION DEL ESQUEMA PARA USO

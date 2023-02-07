@@ -1,8 +1,12 @@
 // IMPORTACIONES DE LOS MODULOS
 import { Request, Response } from 'express';
 import { ChartModel } from '../models/carrito.model';
+import { UsersModel } from '../models/users.model';
 import { ProductsModel } from '../models/productos.model';
+import { sendMailList } from './mail.controller';
+import { sendWpp } from './wpp.controller';
 import moment from 'moment';
+import { finished } from 'stream';
 
 // TRAE EL CARRITO INDICADO POR ID
 export const getById = async (req: Request, res: Response) => {
@@ -29,12 +33,14 @@ export const getById = async (req: Request, res: Response) => {
 // CREA UN NUEVO CARRITO
 export const createChart = async (req: Request, res: Response) => {
     try {
+      const userID = req.params.userID
       const timestamp = moment().format("DD/MM/YYYY, HH:mm");
       const products:[] = [];
   
       const newProduct = await ChartModel.create({
         timestamp,
-        products
+        products,
+        userID
       });
   
       res.status(201).json({
@@ -164,3 +170,35 @@ export const deleteFromChart = async (req: Request, res: Response) => {
         });
     }
 };
+
+//COMPLETACION DE COMPRA
+
+export const finCompra =async (req: Request, res: Response) => {
+  try {
+    
+    //OBTENGO EL ID DEL CARRITO
+    const { id_chart } = req.params;
+
+    //LLAMO AL CARRITO POR ID
+    const chart = await ChartModel.findById(id_chart);
+
+    //LLAMO AL USUARIO POR ID
+    const user = await UsersModel.findById(chart?.userID);
+
+    //CAMBIO EL STATUS DEL CARRITO
+    const status = 'finished';
+    await ChartModel.findByIdAndUpdate( id_chart,
+      { status },
+      { new: true }
+    );
+
+    //ENVIO MAIL Y WPP DE CONFIRMACION
+    await sendMailList(user?.mail, user?.name, chart?.products);
+    await sendWpp(user?.phone);
+
+  } catch (error) {
+    res.status(500).json({
+      error: error,
+    });
+  }
+}

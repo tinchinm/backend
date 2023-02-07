@@ -3,7 +3,7 @@ import { log } from "../config/logs.config";
 import dotenv from "dotenv";
 dotenv.config();
 
-export const sendWpp =async (destino:string) => {
+export const sendWpp =async (destino:any) => {
     try {
         const message = {
             body: "Su pedido ha sido recibido y se encuentra en proceso. Muchas Gracias!",

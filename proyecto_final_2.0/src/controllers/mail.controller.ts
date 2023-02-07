@@ -16,7 +16,7 @@ export const sendMailRegister = async(reciever:string, user:string) => {
     }
 };
 
-export const sendMailList = async(reciever:string, user:string, chart:any) => {
+export const sendMailList = async(reciever:any, user:any, chart:any) => {
     const mailOptions = {
         from: process.env.EMAIL,
         to: process.env.EMAIL,

@@ -26,7 +26,8 @@ const usersSchema = new Schema({
     username:{type: String, required: true, unique: true},
     password:{type: String, required: true},
     avatar:{type:String, required: false},
-    admin:{type: Boolean, default:false}
+    admin:{type: Boolean, default:false},
+    chartsID:{type: Array, default:[]}
 })
 
 //ENCRIPTACION DE CONTRASEÑAS

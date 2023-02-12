@@ -8,7 +8,32 @@ const connectionPath:any = process.env.MONGO_URL
 
 mongoose.set('strictQuery', false);
 
-export const initMongoDB = async () => {
+class MongoDB {
+
+    static instance:any;
+
+    initDB:unknown
+
+    constructor(){
+        
+        if (!MongoDB.instance){
+            this.initDB = mongoose.connect(connectionPath);
+            MongoDB.instance = this;
+            console.log('Conexion a DB Exitosa!');
+        }else{
+            return MongoDB.instance;
+        }
+    }
+
+    async initMongoDB(){
+        return await this.initDB
+    }
+        
+}
+
+export const mongo = new MongoDB
+
+/* export const initMongoDB = async () => {
     try {
       await mongoose.connect(connectionPath);
       console.log('Conexion a DB Exitosa!');
@@ -16,7 +41,7 @@ export const initMongoDB = async () => {
     catch (error) {
       console.log(`Ha ocurrido el siguiente error: ${error}`);
     }
-};
+}; */
 
 export const getAll = async() => {
     try {

@@ -1,6 +1,6 @@
 import * as DaoFile from './filesystem/filesystem'
 import * as DaoMongoDB from './mongo/mongodb'
-import { initMongoDB } from './mongo/mongodb'
+import { mongo } from './mongo/mongodb'
 
 let dao:any;
 
@@ -11,7 +11,7 @@ switch(option) {
         dao = DaoFile;
         break;
     case 'mongo':
-        initMongoDB();
+        mongo.initMongoDB();
         dao = DaoMongoDB;
         break;
 }

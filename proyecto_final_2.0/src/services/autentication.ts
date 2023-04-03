@@ -1,7 +1,7 @@
 // IMPORTACION DE MODULOS
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
-import { UsersModel } from "../models/users.model";
+import { UsersModel } from "../persistence/daos/mongo/models/users.model";
 
 // FUNCION PARA LOGUEARSE
 const login = async ( username:String, password:String, done:Function ) =>{

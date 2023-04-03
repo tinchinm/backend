@@ -1,18 +1,18 @@
 // IMPORTACIONES DE LOS MODULOS
 import { Request, Response } from 'express';
-import { ChartModel } from '../models/carrito.model';
-import { UsersModel } from '../models/users.model';
-import { ProductsModel } from '../models/productos.model';
-import { sendMailList } from './mail.controller';
-import { sendWpp } from './wpp.controller';
+import { getChart as getChartCtrl, 
+         createChart as createChartCtrl, 
+         deleteChart as deleteChartCtrl,
+         addToChart as addToChartCtrl, 
+         deleteFromChart as deleteFromChartCtrl, 
+         finCompra as finCompraCtrl } from '../persistence/repository/carritos.repository';
 import moment from 'moment';
-import { finished } from 'stream';
 
 // TRAE EL CARRITO INDICADO POR ID
 export const getById = async (req: Request, res: Response) => {
     try {
       const { id } = req.params;
-      const chart = await ChartModel.findById(id);
+      const chart = await getChartCtrl(id);
   
       if (!chart)
         return res.status(404).json({
@@ -20,7 +20,7 @@ export const getById = async (req: Request, res: Response) => {
         });
   
       res.json({
-        data: chart.products,
+        data: chart,
       });
 
     } catch (error) {
@@ -37,11 +37,12 @@ export const createChart = async (req: Request, res: Response) => {
       const timestamp = moment().format("DD/MM/YYYY, HH:mm");
       const products:[] = [];
   
-      const newProduct = await ChartModel.create({
+      const newProduct = await createChartCtrl(
         timestamp,
-        products,
-        userID
-      });
+        userID,
+        products
+        
+      );
   
       res.status(201).json({
         msg:'Carrito creado satisfactoriamente',
@@ -58,7 +59,7 @@ export const deleteById = async (req: Request, res: Response) => {
     try {
       const { id } = req.params;
 
-      await ChartModel.findByIdAndDelete(id);
+      await deleteChartCtrl(id);
 
       res.json({
         msg: 'Carrito Eliminado Correctamente'
@@ -73,41 +74,10 @@ export const deleteById = async (req: Request, res: Response) => {
 //AGREGADO DE PRODUCTOS A UN CARRITO
 export const addToChart = async (req: Request, res: Response) => {
     try {
-        //OBTENGO LOS ID
         const { id } = req.params;
         const { id_prod } = req.params;
 
-        //LLAMO AL CARRITO POR ID
-        const chartID = await ChartModel.findById(id);
-        
-        //VALIDO QUE SE HAYA TRAIDO UN CARRITO
-        if (!chartID){
-            return res.status(400).json({
-                msg:'El carrito seleccionado no existe'
-            })
-        }
-        //LLAMO UN PRODUCTO POR ID
-        const product = await ProductsModel.findById(id_prod);
-
-        //VALIDO QUE SE HAYA TRAIDO UN PRODUCTO
-        if (!product){
-            return res.status(400).json({
-                msg:'El producto seleccionado no existe'
-            })
-        }
-
-        //CREO UN ARRAY CON EL ARRAY TRAIDO DEL CARRITO
-        const products = chartID.products
-
-        //PUSHEO PRODUCTO NUEVO EN EL ARRAY CREADO
-	      products.push(product)
-
-        //REALIZO EL UPDATE
-        const productUpdated = await ChartModel.findByIdAndUpdate(
-            id,
-            { products },
-            { new: true }
-          );
+        const productUpdated = await addToChartCtrl(id, id_prod);
 
         res.json({
             msg: 'Producto Agregado Correctamente',
@@ -127,39 +97,7 @@ export const deleteFromChart = async (req: Request, res: Response) => {
         const { id } = req.params;
         const { id_prod } = req.params;
 
-        //LLAMO AL CARRITO POR ID
-        const chartID = await ChartModel.findById(id);
-
-        //VALIDO QUE SE HAYA TRAIDO UN CARRITO
-        if (!chartID){
-            return res.status(400).json({
-                msg:'El carrito seleccionado no existe'
-            })
-        }
-        
-        //CREO UN ARRAY CON EL ARRAY TRAIDO DEL CARRITO
-        const products = chartID.products
-
-        //BUSCO EL PRODUCTO DENTRO DEL CARRITO Y SU INDICE
-        const prod = products.find((producto:any) => producto._id == id_prod);
-        const indice = products.findIndex((producto: any) => producto.id == id_prod);
-
-        //VALIDO QUE SE HAYA ENCONTRADO UN PRODUCTO
-        if (!prod){
-            return res.status(400).json({
-                msg:'El producto seleccionado no existe'
-            })
-        }
-
-        //BORRO EL PRODUCTO
-        products.splice(indice, 1);
-
-        //REALIZO EL UPDATE
-        const productUpdated = await ChartModel.findByIdAndUpdate(
-            id,
-            { products },
-            { new: true }
-          );
+        const productUpdated = await deleteFromChartCtrl(id, id_prod);
 
         res.json({
             msg: 'Producto Eliminado Correctamente'
@@ -176,25 +114,9 @@ export const deleteFromChart = async (req: Request, res: Response) => {
 export const finCompra =async (req: Request, res: Response) => {
   try {
     
-    //OBTENGO EL ID DEL CARRITO
     const { id_chart } = req.params;
 
-    //LLAMO AL CARRITO POR ID
-    const chart = await ChartModel.findById(id_chart);
-
-    //LLAMO AL USUARIO POR ID
-    const user = await UsersModel.findById(chart?.userID);
-
-    //CAMBIO EL STATUS DEL CARRITO
-    const status = 'finished';
-    await ChartModel.findByIdAndUpdate( id_chart,
-      { status },
-      { new: true }
-    );
-
-    //ENVIO MAIL Y WPP DE CONFIRMACION
-    await sendMailList(user?.mail, user?.name, chart?.products);
-    await sendWpp(user?.phone);
+    finCompraCtrl(id_chart)
 
   } catch (error) {
     res.status(500).json({

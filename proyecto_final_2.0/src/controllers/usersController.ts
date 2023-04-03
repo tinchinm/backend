@@ -1,6 +1,6 @@
 // IMPORTACION DE MODULOS
 import passport from "passport";
-import { UsersModel } from "../models/users.model";
+import { register as registerUsr } from "../persistence/repository/users.repository";
 import { Request, Response, NextFunction } from "express";
 import { sendMailRegister } from "./mail.controller";
 
@@ -25,14 +25,12 @@ export const register = async (req:Request, res:Response) => {
   const {name, address, phone, mail, username, password, avatar} = req.body
 
   try {
-        
-    const newUser = new UsersModel({name, address, phone, mail, username, password, avatar});
 
-    await newUser.save();
+    await registerUsr({name, address, phone, mail, username, password, avatar});
 
     await sendMailRegister(mail,name);
     
-    return res.json(newUser)
+    return res.json({ message: 'Registo Exitoso' })
 
   } catch (error) {
       

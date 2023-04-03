@@ -1,12 +1,16 @@
 // IMPORTACIONES DE LOS MODULOS
 import { Request, Response } from "express";
-import { ProductsModel } from "../models/productos.model";
+import { getAll as getAllProds, 
+        save, 
+        getById as getProdById, 
+        updateById as updateProdById, 
+        deleteById as deleteProdById } from "../persistence/repository/productos.repository";
 import moment from 'moment';
 
 // TRAE TODOS LOS PRODUCTOS DE LA DB
 export const getAll = async (req: Request, res: Response) => {
   try {
-    const products = await ProductsModel.find();
+    const products = await getAllProds();
     res.json({
       data: products,
     });
@@ -21,7 +25,7 @@ export const getAll = async (req: Request, res: Response) => {
 export const getById = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const product = await ProductsModel.findById(id);
+    const product = await getProdById(id);
 
     if (!product)
       return res.status(404).json({
@@ -44,7 +48,7 @@ export const createProduct = async (req: Request, res: Response) => {
     const timestamp = moment().format("DD/MM/YYYY, HH:mm");
     const { title, description, code, thumbnail, price, stock } = req.body;
 
-    const newProduct = await ProductsModel.create({
+    const newProduct = await save({
       timestamp,
       title,
       description,
@@ -71,17 +75,9 @@ export const updateById = async (req: Request, res: Response) => {
     const { title, description, code, thumbnail, price, stock } = req.body;
     const timestamp = moment().format("DD/MM/YYYY, HH:mm");
 
-    const product = await ProductsModel.findById(id);
-
-    if (!product)
-      return res.status(404).json({
-        msg: "El producto indicado no existe",
-      });
-
-    const productUpdated = await ProductsModel.findByIdAndUpdate(
+    const productUpdated = await updateProdById(
       id,
-      { timestamp, title, description, code, thumbnail, price, stock },
-      { new: true }
+      { timestamp, title, description, code, thumbnail, price, stock }
     );
 
     res.json({
@@ -101,7 +97,7 @@ export const deleteById = async (req: Request, res: Response) => {
     try {
       const { id } = req.params;
 
-      await ProductsModel.findByIdAndDelete(id);
+      await deleteProdById(id);
 
       res.json({
         msg: 'Producto Eliminado Correctamente'

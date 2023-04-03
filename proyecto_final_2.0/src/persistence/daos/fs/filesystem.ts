@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { log } from "../../../config/logs.config";
 import { sendMailList } from '../../../controllers/mail.controller';
 import { sendWpp } from '../../../controllers//wpp.controller';
 
@@ -17,7 +18,7 @@ export const getAll = async() => {
             return[];
         }
     } catch (error) {
-        console.log(error);
+        log.error(error);
     }
 }
 
@@ -28,7 +29,7 @@ export const save = async(data:any) => {
         await fs.promises.writeFile(prodPath,JSON.stringify(prods, null, '\t'))
         return data;
     } catch (error) {
-        console.log(error);
+        log.error(error);
     }
 };
 
@@ -40,7 +41,7 @@ export const getById = async (id:String) => {
         return busqueda;
 
     } catch (error) {
-        console.log(error);
+        log.error(error);
     }
 };
 
@@ -74,7 +75,7 @@ export const updateById = async (id:String, data:any) => {
     return updatedProd
   
       } catch (error) {
-          console.log(error);
+          log.error(error);
       }
 }
 
@@ -87,7 +88,7 @@ export const deleteById = async (id:String) => {
         await save(prods);
       
     } catch (error) {
-        console.log(error);
+        log.error(error);
     }
 };
 
@@ -102,7 +103,7 @@ export const getAllCharts = async() => {
             return[];
         }
     } catch (error) {
-        console.log(error);
+        log.error(error);
     }
 }
 
@@ -112,7 +113,7 @@ export const saveChart = async(data:any) => {
         charts.push(data);
         await fs.promises.writeFile(chartsPath,JSON.stringify(charts, null, '\t'))
     } catch (error) {
-        console.log(error);
+        log.error(error);
     }
 };
 
@@ -125,7 +126,7 @@ export const getChart = async (id:String) => {
       return busqueda.productos
 
     } catch (error) {
-        console.log(error);
+        log.error(error);
     }
   };
 
@@ -141,7 +142,7 @@ export const createChart = async (userID:String,timestamp:String,products:[]) =>
      return newProduct
 
     } catch (error) {
-        console.log(error);
+        log.error(error);
     }
 };
 
@@ -154,7 +155,7 @@ export const deleteChart = async (id:String) => {
         charts.splice(indice,1);
         await saveChart(charts)
     } catch (error) {
-        console.log(error);
+        log.error(error);
     }
 };
 
@@ -189,7 +190,7 @@ export const addToChart = async (id:String, id_prod:String) => {
         return chartID;
 
     } catch (error) {
-        console.log(error);
+        log.error(error);
     }
 };
 
@@ -228,7 +229,7 @@ export const deleteFromChart = async (id:String, id_prod:String) => {
         return chartID;
 
     } catch (error) {
-        console.log(error);
+        log.error(error);
     }
 };
 
@@ -252,7 +253,7 @@ export const finCompra = async (id_chart:String) => {
      await sendWpp(user?.phone);
 
 } catch (error) {
-    console.log(error);
+    log.error(error);
 }
 }
 
@@ -267,7 +268,7 @@ export const getAllUsers = async() => {
             return[];
         }
     } catch (error) {
-        console.log(error);
+        log.error(error);
     }
 }
 
@@ -279,7 +280,7 @@ export const getUserById = async (id:String) => {
         return busqueda;
 
     } catch (error) {
-        console.log(error);
+        log.error(error);
     }
 };
 
@@ -293,6 +294,6 @@ export const register = async (data:any) => {
         return data
   
     } catch (error) {
-        console.log(error);
+        log.error(error);
     }
   }
